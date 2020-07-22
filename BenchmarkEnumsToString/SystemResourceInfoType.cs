@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SourceCode.Forms.Utilities.DataProviders.Models
+namespace BenchmarkEnumToStringDotNetStandard
 {
     public enum SystemResourceInfoType
     {

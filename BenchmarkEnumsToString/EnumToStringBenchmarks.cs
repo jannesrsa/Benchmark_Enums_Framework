@@ -1,10 +1,48 @@
-﻿namespace SourceCode.Forms.Utilities.DataProviders.Models.Extensions
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Mathematics;
+using BenchmarkDotNet.Order;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+namespace BenchmarkEnumToStringDotNetStandard
 {
-    public static class SystemResourceInfoWithSwitch
+    [Orderer(SummaryOrderPolicy.FastestToSlowest)]
+    [RankColumn(NumeralSystem.Arabic)]
+    [SimpleJob(RuntimeMoniker.Net48)]
+    [MemoryDiagnoser]
+    public class EnumToStringBenchmarks
     {
-        public static string GetDisplayNameWithSwitch(this SystemResourceInfoType value)
+        public EnumToStringBenchmarks()
         {
-            switch (value)
+            EnumValue = (SystemResourceInfoType)new Random().Next(1, 13);
+        }
+
+        public SystemResourceInfoType EnumValue { get; set; }
+
+        [Benchmark]
+        public string DisplayAtrribute()
+        {
+            var fi = EnumValue.GetType().GetField(EnumValue.ToString());
+
+            var attributes = fi?.GetCustomAttributes(typeof(DisplayAttribute), false) as DisplayAttribute[];
+
+            if (attributes?.First()?.Description != null)
+            {
+                return attributes?.First()?.Description;
+            }
+
+            return EnumValue.ToString();
+        }
+
+        [Benchmark(Baseline = true)]
+        public string EnumToString() => EnumValue.ToString();
+
+        [Benchmark]
+        public string SwitchStatement()
+        {
+            switch (EnumValue)
             {
                 case SystemResourceInfoType.DateTimeNow:
                     return "datetime-now";
@@ -49,5 +87,8 @@
                     return "datetime-now";
             }
         }
+
+        [Benchmark]
+        public string UseDictionary() => EnumValue.FromDictionary();
     }
 }
