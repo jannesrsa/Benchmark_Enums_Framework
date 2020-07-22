@@ -23,5 +23,8 @@ namespace Benchmark_Enums
 
         [Benchmark]
         public string GetEnumDescription() => _enumType.GetEnumDescription();
+
+        [Benchmark]
+        public string GetDisplayNameWithSwitch() => _enumType.GetDisplayNameWithSwitch();
     }
 }
