@@ -2,6 +2,7 @@
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Mathematics;
 using BenchmarkDotNet.Order;
+using BenchmarkDotNet.Running;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace BenchmarkEnumToStringDotNetStandard
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
     [RankColumn(NumeralSystem.Arabic)]
     [SimpleJob(RuntimeMoniker.Net48)]
+    [SimpleJob(RuntimeMoniker.CoreRt31)]
     [MemoryDiagnoser]
     public class EnumToStringBenchmarks
     {
@@ -20,6 +22,11 @@ namespace BenchmarkEnumToStringDotNetStandard
         }
 
         public SystemResourceInfoType EnumValue { get; set; }
+
+        public static void Run()
+        {
+            _ = BenchmarkRunner.Run<EnumToStringBenchmarks>();
+        }
 
         [Benchmark]
         public string DisplayAtrribute()

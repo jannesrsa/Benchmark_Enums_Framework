@@ -1,10 +1,9 @@
-﻿using BenchmarkDotNet.Running;
-using BenchmarkEnumToStringDotNetStandard;
+﻿using BenchmarkEnumToStringDotNetStandard;
 using System;
 
-namespace ConsoleBenchmarkRunner
+namespace ConsoleBenchmarkRunner.Core
 {
-    public class Program
+    class Program
     {
         public static void Main(string[] args)
         {
@@ -20,7 +19,7 @@ namespace ConsoleBenchmarkRunner
                 Console.WriteLine($"-------------------------------------");
             }
 
-            _ = BenchmarkRunner.Run<EnumToStringBenchmarks>();
+            EnumToStringBenchmarks.Run();
 
             Console.ReadKey();
         }
