@@ -12,7 +12,7 @@ namespace BenchmarkEnumToStringDotNetStandard
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
     [RankColumn(NumeralSystem.Arabic)]
     [SimpleJob(RuntimeMoniker.Net48)]
-    [SimpleJob(RuntimeMoniker.CoreRt31)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
     [MemoryDiagnoser]
     public class EnumToStringBenchmarks
     {
@@ -91,7 +91,7 @@ namespace BenchmarkEnumToStringDotNetStandard
                     return "systemvalues";
 
                 default:
-                    return "datetime-now";
+                    throw new ArgumentOutOfRangeException(nameof(EnumValue));
             }
         }
 
